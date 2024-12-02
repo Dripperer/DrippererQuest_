@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>BandQuest</title>
+   <style>
+       body {
+           font-family: 'Comic Sans MS', sans-serif;
+           margin: 0;
+           padding: 0;
+           background-color: #f0f0f0;
+           color: #333;
+       }
+       header, footer {
+           background-color: #4CAF50;
+           color: white;
+           text-align: center;
+           padding: 1em 0;
+       }
+       .container {
+           padding: 2em;
+       }
+       .login {
+           text-align: center;
+           margin-top: 50px;
+       }
+       .quiz-question {
+           margin: 1em 0;
+       }
+       .btn {
+           background-color: #4CAF50;
+           color: white;
+           padding: 0.5em 1em;
+           border: none;
+           cursor: pointer;
+       }
+       .feedback {
+           font-weight: bold;
+           display: none;
+       }
+       .feedback.correct {
+           color: green;
+       }
+       .feedback.incorrect {
+           color: red;
+       }
+       .header-info {
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           padding: 0 1em;
+       }
+   </style>
+</head>
+<body>
+
+<header>
+   <div class="header-info">
+       <div id="time-remaining">Tempo rimanente: 7 giorni</div>
+       <h1>BandQuest</h1>
+       <button id="exit-btn" style="display: none;" class="btn" onclick="exitQuiz()">Esci</button>
+   </div>
+   <p>Benvenuto nel gioco della tua band preferita!</p>
+</header>
+
+<div class="container" id="login-screen">
+   <div class="login">
+       <h2>Accesso</h2>
+       <input type="text" id="username" placeholder="Nome utente"><br><br>
+       <input type="password" id="password" placeholder="Password"><br><br>
+       <button class="btn" onclick="login()">Accedi</button>
+   </div>
+</div>
+
+<div class="container" id="quiz-screen" style="display: none;">
+   <h2>Sfide Settimanali</h2>
+   <p>Completa le sfide settimanali per guadagnare punti e vincere fantastici premi!</p>
+
+   <div class="quiz">
+       <h3>Quiz Musicale</h3>
+       <div class="quiz-question" data-answer="drip&chill">
+           <p>Come si chiama la nostra prima canzone? </p>
+           <button class="btn" onclick="checkAnswer(this, 'drip&chill')">Drip&chill</button>
+           <button class="btn" onclick="checkAnswer(this, 'drip&drill')">Drip&drill</button>
+           <button class="btn" onclick="checkAnswer(this, 'chill&relax')">Chill&relax</button>
+           <p class="feedback"></p>
+       </div>
+       <div class="quiz-question" data-answer="5">
+           <p>In quanti eravamo all'inizio? </p>
+           <button class="btn" onclick="checkAnswer(this, '3')">3</button>
+           <button class="btn" onclick="checkAnswer(this, '6')">6</button>
+           <button class="btn" onclick="checkAnswer(this, '5')">5</button>
+           <p class="feedback"></p>
+       </div>
+       <div class="quiz-question" data-answer="poprock">
+           <p>Qual è il nostro genere principale? </p>
+           <button class="btn" onclick="checkAnswer(this, 'poprock')">Poprock</button>
+           <button class="btn" onclick="checkAnswer(this, 'trap')">Trap</button>
+           <button class="btn" onclick="checkAnswer(this, 'pop')">Pop</button>
+           <p class="feedback"></p>
+       </div>
+       <div class="quiz-question" data-answer="sebasthian">
+           <p>Chi è il batterista? </p>
+           <button class="btn" onclick="checkAnswer(this, 'Andrea')">Andrea</button>
+           <button class="btn" onclick="checkAnswer(this, 'sebasthian')">Sebasthian</button>
+           <p class="feedback"></p>
+       </div>
+       <div class="quiz-question" data-answer="batteria">
+           <p>All'inizio di Drip&chill che strumento c'è? </p>
+           <button class="btn" onclick="checkAnswer(this, 'basso')">Basso</button>
+           <button class="btn" onclick="checkAnswer(this, 'chitarra')">Chitarra</button>
+           <button class="btn" onclick="checkAnswer(this, 'batteria')">Batteria</button>
+           <p class="feedback"></p>
+       </div>
+       <div class="quiz-question" data-answer="luglio 2023">
+           <p>Quando è nata la band? </p>
+           <button class="btn" onclick="checkAnswer(this, 'luglio 2023')">Luglio 2023</button>
+           <button class="btn" onclick="checkAnswer(this, 'ottobre 2024')">Ottobre 2024</button>
+           <button class="btn" onclick="checkAnswer(this, 'luglio 2024')">Luglio 2024</button>
+           <p class="feedback"></p>
+       </div>
+   </div>
+</div>
+
+<footer>
+   <p>&copy; 2024 BandQuest. Tutti i diritti riservati.</p>
+</footer>
+
+<script>
+   function login() {
+       const username = document.getElementById('username').value;
+       const password = document.getElementById('password').value;
+
+       if (username && password) {
+           console.log("Login successful");
+           document.getElementById('login-screen').style.display = 'none';
+           document.getElementById('quiz-screen').style.display = 'block';
+       } else {
+           alert('Per favore, inserisci nome utente e password.');
+       }
+   }
+
+   function checkAnswer(button, userAnswer) {
+       console.log("Button clicked, answer: " + userAnswer);
+       const questionDiv = button.parentElement;
+       const correctAnswer = questionDiv.getAttribute('data-answer');
+       const feedback = questionDiv.querySelector('.feedback');
+
+       if (userAnswer === correctAnswer) {
+           feedback.textContent = "+10!";
+           feedback.classList.add('correct');
+           feedback.classList.remove('incorrect');
+       } else {
+           feedback.textContent = "Sbagliato!!";
+           feedback.classList.add('incorrect');
+           feedback.classList.remove('correct');
+       }
+
+       feedback.style.display = 'block';
+       document.getElementById('exit-btn').style.display = 'block';
+   }
+
+   function exitQuiz() {
+       const quizScreen = document.getElementById('quiz-screen');
+       const loginScreen = document.getElementById('login-screen');
+       const feedbacks = document.querySelectorAll('.feedback');
+
+       quizScreen.style.display = 'block';
+       loginScreen.style.display = 'none';
+       document.getElementById('exit-btn').style.display = 'none';
+       feedbacks.forEach(feedback => feedback.style.display = 'none');
+   }
+
+   // Function to update the time remaining
+   function updateTimeRemaining() {
+       const endTime = new Date();
+       endTime.setDate(endTime.getDate() + 7); // 7 days from now
+       const now = new Date();
+       const timeRemaining = endTime - now;
+       const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+       const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+       const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+       document.getElementById('time-remaining').textContent = `Tempo rimanente: ${days} giorni ${hours} ore ${minutes} minuti`;
+   }
+
+   setInterval(updateTimeRemaining, 60000); // Update every minute
+   updateTimeRemaining(); // Initial call to display time immediately
+</script>
+
+</body>
+</html>
