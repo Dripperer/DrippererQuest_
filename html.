@@ -191,26 +191,4 @@
        const correctAnswer = questionDiv.getAttribute('data-answer');
        const feedback = questionDiv.querySelector('.feedback');
 
-       if (userAnswer === correctAnswer) {
-           feedback.textContent = "+10!";
-           feedback.classList.add('correct');
-           feedback.classList.remove('incorrect');
-       } else {
-           feedback.textContent = "Sbagliato!!";
-           feedback.classList.add('incorrect');
-           feedback.classList.remove('correct');
-       }
-
-       feedback.style.display = 'block';
-       document.getElementById('exit-btn').style.display = 'block';
-   }
-
-   function exitQuiz() {
-       document.getElementById('quiz-screen').style.display = 'block';
-       const feedbacks = document.querySelectorAll('.feedback');
-       feedbacks.forEach(feedback => feedback.style.display = 'none');
-   }
-
-   function updateTimeRemaining() {
-       const endTime = new Date();
-       endTime.setDate(endTime.getDate() +
+       if (userAnswer === correct
