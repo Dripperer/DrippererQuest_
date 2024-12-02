@@ -162,7 +162,6 @@
    }
 
    function exitQuiz() {
-       document.getElementById('login-screen').style.display = 'none';
        document.getElementById('quiz-screen').style.display = 'block';
        const feedbacks = document.querySelectorAll('.feedback');
        feedbacks.forEach(feedback => feedback.style.display = 'none');
@@ -176,7 +175,7 @@
        const timeRemaining = endTime - now;
        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-       const minutes = Math.floor((timeRemaining % (1000 * 60)) / (1000));
+       const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
        document.getElementById('time-remaining').textContent = `Tempo rimanente: ${days} giorni ${hours} ore ${minutes} minuti`;
    }
 
