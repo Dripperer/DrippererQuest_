@@ -6,7 +6,7 @@
    <title>BandQuest</title>
    <style>
        body {
-           font-family: 'Comic Sans MS', sans-serif;
+           font-family: Arial, sans-serif;
            margin: 0;
            padding: 0;
            background-color: #f0f0f0;
@@ -51,6 +51,16 @@
            align-items: center;
            padding: 0 1em;
        }
+       .leaderboard {
+           margin-top: 2em;
+           text-align: left;
+       }
+       .leaderboard h2 {
+           text-align: center;
+       }
+       .tiktok-links {
+           margin-top: 1em;
+       }
    </style>
 </head>
 <body>
@@ -85,6 +95,10 @@
            <button class="btn" onclick="checkAnswer(this, 'drip&drill')">Drip&drill</button>
            <button class="btn" onclick="checkAnswer(this, 'chill&relax')">Chill&relax</button>
            <p class="feedback"></p>
+           <div class="tiktok-links">
+               <input type="text" placeholder="Link TikTok 1">
+               <input type="text" placeholder="Link TikTok 2">
+           </div>
        </div>
        <div class="quiz-question" data-answer="5">
            <p>In quanti eravamo all'inizio? </p>
@@ -92,6 +106,10 @@
            <button class="btn" onclick="checkAnswer(this, '6')">6</button>
            <button class="btn" onclick="checkAnswer(this, '5')">5</button>
            <p class="feedback"></p>
+           <div class="tiktok-links">
+               <input type="text" placeholder="Link TikTok 1">
+               <input type="text" placeholder="Link TikTok 2">
+           </div>
        </div>
        <div class="quiz-question" data-answer="poprock">
            <p>Qual è il nostro genere principale? </p>
@@ -99,12 +117,20 @@
            <button class="btn" onclick="checkAnswer(this, 'trap')">Trap</button>
            <button class="btn" onclick="checkAnswer(this, 'pop')">Pop</button>
            <p class="feedback"></p>
+           <div class="tiktok-links">
+               <input type="text" placeholder="Link TikTok 1">
+               <input type="text" placeholder="Link TikTok 2">
+           </div>
        </div>
        <div class="quiz-question" data-answer="sebasthian">
            <p>Chi è il batterista? </p>
            <button class="btn" onclick="checkAnswer(this, 'Andrea')">Andrea</button>
            <button class="btn" onclick="checkAnswer(this, 'sebasthian')">Sebasthian</button>
            <p class="feedback"></p>
+           <div class="tiktok-links">
+               <input type="text" placeholder="Link TikTok 1">
+               <input type="text" placeholder="Link TikTok 2">
+           </div>
        </div>
        <div class="quiz-question" data-answer="batteria">
            <p>All'inizio di Drip&chill che strumento c'è? </p>
@@ -112,6 +138,10 @@
            <button class="btn" onclick="checkAnswer(this, 'chitarra')">Chitarra</button>
            <button class="btn" onclick="checkAnswer(this, 'batteria')">Batteria</button>
            <p class="feedback"></p>
+           <div class="tiktok-links">
+               <input type="text" placeholder="Link TikTok 1">
+               <input type="text" placeholder="Link TikTok 2">
+           </div>
        </div>
        <div class="quiz-question" data-answer="luglio 2023">
            <p>Quando è nata la band? </p>
@@ -119,7 +149,21 @@
            <button class="btn" onclick="checkAnswer(this, 'ottobre 2024')">Ottobre 2024</button>
            <button class="btn" onclick="checkAnswer(this, 'luglio 2024')">Luglio 2024</button>
            <p class="feedback"></p>
+           <div class="tiktok-links">
+               <input type="text" placeholder="Link TikTok 1">
+               <input type="text" placeholder="Link TikTok 2">
+           </div>
        </div>
+   </div>
+
+   <div class="leaderboard">
+       <h2>Classifica</h2>
+       <ol>
+           <li>Utente 1 - 120 punti</li>
+           <li>Utente 2 - 110 punti</li>
+           <li>Utente 3 - 100 punti</li>
+           <!-- Altri utenti -->
+       </ol>
    </div>
 </div>
 
@@ -162,31 +206,7 @@
    }
 
    function exitQuiz() {
-       const quizScreen = document.getElementById('quiz-screen');
-       const loginScreen = document.getElementById('login-screen');
+       document.getElementById('login-screen').style.display = 'none';
+       document.getElementById('quiz-screen').style.display = 'block';
        const feedbacks = document.querySelectorAll('.feedback');
-
-       quizScreen.style.display = 'block';
-       loginScreen.style.display = 'none';
-       document.getElementById('exit-btn').style.display = 'none';
-       feedbacks.forEach(feedback => feedback.style.display = 'none');
-   }
-
-   // Function to update the time remaining
-   function updateTimeRemaining() {
-       const endTime = new Date();
-       endTime.setDate(endTime.getDate() + 7); // 7 days from now
-       const now = new Date();
-       const timeRemaining = endTime - now;
-       const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-       const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-       const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-       document.getElementById('time-remaining').textContent = `Tempo rimanente: ${days} giorni ${hours} ore ${minutes} minuti`;
-   }
-
-   setInterval(updateTimeRemaining, 60000); // Update every minute
-   updateTimeRemaining(); // Initial call to display time immediately
-</script>
-
-</body>
-</html>
+       feedbacks.forEach(feedback => feedback.style.display = 'none
