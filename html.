@@ -211,4 +211,6 @@
        feedbacks.forEach(feedback => feedback.style.display = 'none');
    }
 
-   // Function to update
+   function updateTimeRemaining() {
+       const endTime = new Date();
+       endTime.setDate(endTime.getDate() +

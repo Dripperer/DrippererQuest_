@@ -208,4 +208,7 @@
    function exitQuiz() {
        document.getElementById('quiz-screen').style.display = 'block';
        const feedbacks = document.querySelectorAll('.feedback');
-       feedback
+       feedbacks.forEach(feedback => feedback.style.display = 'none');
+   }
+
+   function updateTimeRemaining() {}
