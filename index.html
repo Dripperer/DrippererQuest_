@@ -88,20 +88,21 @@
       <input type="text" id="username" placeholder="Nome utente"><br><br>
       <input type="password" id="password" placeholder="Password"><br><br>
       <button class="btn" onclick="login()">Accedi</button>
+      <p id="login-error" style="color: red; display: none;">Password errata!</p>
   </div>
 </div>
 
 <div class="container" id="question-list" style="display: none;">
   <h2>Lista delle Domande</h2>
-  <ul>
-      <li><button class="btn" onclick="showQuestion(0)">Domanda 1</button></li>
-      <li><button class="btn" onclick="showQuestion(1)">Domanda 2</button></li>
-      <li><button class="btn" onclick="showQuestion(2)">Domanda 3</button></li>
-      <li><button class="btn" onclick="showQuestion(3)">Domanda 4</button></li>
-      <li><button class="btn" onclick="showQuestion(4)">Domanda 5</button></li>
-      <li><button class="btn" onclick="showQuestion(5)">Domanda 6</button></li>
+  <ul id="question-list-ul">
   </ul>
-  <button class="btn" onclick="showLeaderboard()">Mostra Classifica</button>
+  <div>
+      <input type="text" placeholder="Link TikTok 1" class="tiktok-link">
+      <input type="text" placeholder="Link TikTok 2" class="tiktok-link">
+      <button class="btn" onclick="addVideoField()">+</button>
+  </div>
+  <button class="btn" onclick="submitVideos()">Invia Video</button>
+  <button class="btn" onclick="showLeaderboard()">Classifica Sfida!</button>
 </div>
 
 <div class="container" id="quiz-screen" style="display: none;">
@@ -109,84 +110,157 @@
   <p>Completa le sfide settimanali per guadagnare punti e vincere fantastici premi!</p>
 
   <div class="quiz" id="question-container">
-      <div class="quiz-question" data-answer="drip&chill" style="display: none;">
-          <p>Come si chiama la nostra prima canzone? </p>
-          <button class="btn" onclick="checkAnswer(this, 'drip&chill')">Drip&chill</button>
-          <button class="btn" onclick="checkAnswer(this, 'drip&drill')">Drip&drill</button>
-          <button class="btn" onclick="checkAnswer(this, 'chill&relax')">Chill&relax</button>
-          <p class="feedback"></p>
-          <div class="tiktok-links">
-              <input type="text" placeholder="Link TikTok 1">
-              <input type="text" placeholder="Link TikTok 2">
-          </div>
-      </div>
-      <div class="quiz-question" data-answer="5" style="display: none;">
-          <p>In quanti eravamo all'inizio? </p>
-          <button class="btn" onclick="checkAnswer(this, '3')">3</button>
-          <button class="btn" onclick="checkAnswer(this, '6')">6</button>
-          <button class="btn" onclick="checkAnswer(this, '5')">5</button>
-          <p class="feedback"></p>
-          <div class="tiktok-links">
-              <input type="text" placeholder="Link TikTok 1">
-              <input type="text" placeholder="Link TikTok 2">
-          </div>
-      </div>
-      <div class="quiz-question" data-answer="poprock" style="display: none;">
-          <p>Qual è il nostro genere principale? </p>
-          <button class="btn" onclick="checkAnswer(this, 'poprock')">Poprock</button>
-          <button class="btn" onclick="checkAnswer(this, 'trap')">Trap</button>
-          <button class="btn" onclick="checkAnswer(this, 'pop')">Pop</button>
-          <p class="feedback"></p>
-          <div class="tiktok-links">
-              <input type="text" placeholder="Link TikTok 1">
-              <input type="text" placeholder="Link TikTok 2">
-          </div>
-      </div>
-      <div class="quiz-question" data-answer="sebasthian" style="display: none;">
-          <p>Chi è il batterista? </p>
-          <button class="btn" onclick="checkAnswer(this, 'Andrea')">Andrea</button>
-          <button class="btn" onclick="checkAnswer(this, 'sebasthian')">Sebasthian</button>
-          <p class="feedback"></p>
-          <div class="tiktok-links">
-              <input type="text" placeholder="Link TikTok 1">
-              <input type="text" placeholder="Link TikTok 2">
-          </div>
-      </div>
-      <div class="quiz-question" data-answer="batteria" style="display: none;">
-          <p>All'inizio di Drip&chill che strumento c'è? </p>
-          <button class="btn" onclick="checkAnswer(this, 'basso')">Basso</button>
-          <button class="btn" onclick="checkAnswer(this, 'chitarra')">Chitarra</button>
-          <button class="btn" onclick="checkAnswer(this, 'batteria')">Batteria</button>
-          <p class="feedback"></p>
-          <div class="tiktok-links">
-              <input type="text" placeholder="Link TikTok 1">
-              <input type="text" placeholder="Link TikTok 2">
-          </div>
-      </div>
-      <div class="quiz-question" data-answer="luglio 2023" style="display: none;">
-          <p>Quando è nata la band? </p>
-          <button class="btn" onclick="checkAnswer(this, 'luglio 2023')">Luglio 2023</button>
-          <button class="btn" onclick="checkAnswer(this, 'ottobre 2024')">Ottobre 2024</button>
-          <button class="btn" onclick="checkAnswer(this, 'luglio 2024')">Luglio 2024</button>
-          <p class="feedback"></p>
-          <div class="tiktok-links">
-              <input type="text" placeholder="Link TikTok 1">
-              <input type="text" placeholder="Link TikTok 2">
-          </div>
-      </div>
+      <!-- Le domande saranno caricate qui -->
   </div>
 
-  <div class="leaderboard" style="display: none;">
+  <div class="leaderboard" id="leaderboard-container" style="display: none;">
       <h2>Classifica</h2>
       <div class="close" onclick="closeLeaderboard()">X</div>
-      <ol>
-          <li>Utente 1 - 120 punti</li>
-          <li>Utente 2 - 110 punti</li>
-          <li>Utente 3 - 100 punti</li>
-          <!-- Altri utenti -->
+      <ol id="leaderboard-list">
+          <!-- La classifica sarà caricata qui -->
       </ol>
   </div>
 </div>
 
 <footer>
-  <p>&copy; 2024 BandQuest. Tutti i diritti riserv
+  <p>&copy; 2024 BandQuest. Tutti i diritti riservati.</p>
+</footer>
+
+<script>
+  async function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `username=${username}&password=${password}`
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+          document.getElementById('login-error').style.display = 'none';
+          document.getElementById('login-screen').style.display = 'none';
+          document.getElementById('question-list').style.display = 'block';
+          loadQuestions();
+      } else {
+          document.getElementById('login-error').style.display = 'block';
+      }
+  }
+
+  async function loadQuestions() {
+      const response = await fetch('/quiz');
+      const questions = await response.json();
+
+      const questionList = document.getElementById('question-list-ul');
+      questionList.innerHTML = '';
+      questions.forEach((q, index) => {
+          const listItem = document.createElement('li');
+          const button = document.createElement('button');
+          button.className = 'btn';
+          button.textContent = `Domanda ${index + 1}`;
+          button.onclick = () => showQuestion(index);
+          listItem.appendChild(button);
+          questionList.appendChild(listItem);
+      });
+  }
+
+  async function showQuestion(index) {
+      const response = await fetch('/quiz');
+      const questions = await response.json();
+      const question = questions[index];
+
+      const questionContainer = document.getElementById('question-container');
+      questionContainer.innerHTML = `
+          <div class="quiz-question" data-answer="${question.correct}">
+              <p>${question.question}</p>
+              ${question.answers.map(answer => `<button class="btn" onclick="checkAnswer(this, '${answer}', ${index})">${answer}</button>`).join('')}
+              <p class="feedback"></p>
+          </div>
+      `;
+
+      document.getElementById('question-list').style.display = 'none';
+      document.getElementById('quiz-screen').style.display = 'block';
+  }
+
+  async function checkAnswer(button, userAnswer, index) {
+      const response = await fetch('/check_answer', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `question_index=${index}&user_answer=${userAnswer}`
+      });
+
+      const result = await response.json();
+      const feedback = button.parentElement.querySelector('.feedback');
+
+      if (result.correct) {
+          feedback.textContent = 'Risposta Corretta!';
+          feedback.className = 'feedback correct';
+          addPoints(10);
+      } else {
+          feedback.textContent = 'Risposta Sbagliata!';
+          feedback.className = 'feedback incorrect';
+      }
+
+      feedback.style.display = 'block';
+  }
+
+  function addPoints(points) {
+      fetch('/add_points', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `points=${points}`
+      });
+  }
+
+  function addVideoField() {
+      const container = document.createElement('div');
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Link TikTok';
+      input.className = 'tiktok-link';
+      container.appendChild(input);
+      document.querySelector('.container').appendChild(container);
+  }
+
+  async function submitVideos() {
+      const videoLinks = Array.from(document.querySelectorAll('.tiktok-link')).map(input => input.value);
+      const response = await fetch('/submit_videos', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ videos: videoLinks })
+      });
+
+      if (response.ok) {
+          addPoints(videoLinks.length * 5);
+          alert('Video inviati correttamente!');
+      }
+  }
+
+  function showLeaderboard() {
+      fetch('/leaderboard')
+          .then(response => response.json())
+          .then(data => {
+              const leaderboardList = document.getElementById('leaderboard-list');
+              leaderboardList.innerHTML = '';
+              data.forEach((entry, index) => {
+                  const listItem = document.createElement('li');
+                  listItem.textContent = `${index + 1}. ${entry.name}: ${entry.points} punti`;
+                  leaderboardList.appendChild(listItem);
+              });
+              document.getElementById('question-list').style.display = 'none';
+              document.getElementById('leaderboard-container').style.display = 'block';
+          });
+  }
+
+  function closeLeaderboard() {
+      document.getElementById('leaderboard-container').style.display = 'none'}

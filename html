@@ -1,0 +1,60 @@
+from flask import Flask, render_template_string, request, jsonify
+
+app = Flask(__name__)
+
+quiz_data = [
+    {"question": "Come si chiama la nostra prima canzone?", "answers": ["Drip&chill", "Drip&drill", "Chill&relax"], "correct": "Drip&chill"},
+    {"question": "In quanti eravamo all'inizio?", "answers": ["3", "6", "5"], "correct": "5"},
+    {"question": "Qual è il nostro genere principale?", "answers": ["Poprock", "Trap", "Pop"], "correct": "Poprock"},
+    {"question": "Chi è il batterista?", "answers": ["Andrea", "Sebasthian"], "correct": "Sebasthian"},
+    {"question": "All'inizio di Drip&chill che strumento c'è?", "answers": ["Basso", "Chitarra", "Batteria"], "correct": "Batteria"},
+    {"question": "Quando è nata la band?", "answers": ["Luglio 2023", "Ottobre 2024", "Luglio 2024"], "correct": "Luglio 2023"}
+]
+
+leaderboard_data = []
+
+@app.route('/')
+def index():
+    return render_template_string(open('index.html').read())
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    if username == 'admin' and password == 'admin':  # Usa credenziali di esempio
+        return jsonify(success=True)
+    else:
+        return jsonify(success=False)
+
+@app.route('/quiz')
+def quiz():
+    return jsonify(quiz_data)
+
+@app.route('/check_answer', methods=['POST'])
+def check_answer():
+    question_index = int(request.form.get('question_index'))
+    user_answer = request.form.get('user_answer')
+
+    correct_answer = quiz_data[question_index]['correct']
+    return jsonify(correct=user_answer == correct_answer)
+
+@app.route('/add_points', methods=['POST'])
+def add_points():
+    points = int(request.form.get('points'))
+    leaderboard_data.append({"name": "User", "points": points})
+    return jsonify(success=True)
+
+@app.route('/leaderboard')
+def leaderboard():
+    return jsonify(sorted(leaderboard_data, key=lambda x: x['points'], reverse=True))
+
+@app.route('/submit_videos', methods=['POST'])
+def submit_videos():
+    videos = request.json.get('videos')
+    points = len(videos) * 5
+    leaderboard_data.append({"name": "User", "points": points})
+    return jsonify(success=True)
+
+if __name__ == '__main__':
+    app.run(debug=True)
